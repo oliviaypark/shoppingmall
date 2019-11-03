@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<title>Shopping mall</title>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+	<!-- JS -->		
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+	<!-- 구글폰트 -->
+	<link href="https://fonts.googleapis.com/css?family=Stylish&display=swap" rel="stylesheet">
+
+	<!-- style -->
+	<style type="text/css">
+		* {
+			font-family: 'Nanum Myeongjo', sans-serif;
+		}
+		.wrap {
+			width: 900px;
+			height: 500px;
+			margin: auto;
+		}
+		.card-deck {
+			margin-top: 10px;
+			margin-bottom: 10px;
+		}
+		.comment {
+			color: blue;
+			font-weight: bold;
+		}
+		.jumbotron {
+			padding: 10px 50px;
+			margin: 10px;
+		}
+		.text-muted {
+			color: green !important;
+		}
+		.posting-box {
+			margin: 30px auto;
+			padding: 20px;
+			width:50%;
+			border:3px solid lightgray;
+		}
+	</style>
+
+	<script>
+		let num = 0;
+		function hey() {
+			let name = 'olivia';
+			let amount= $('#').val();
+			let address = $('#comment').val();
+			let num = $('#comment').val();
+			
+			console.log(amount);
+			console.log(address);
+			console.log(num);
+
+			$.ajax({
+			  type: "POST",
+			  url: "http://spartacodingclub.shop/order",
+			  data: {name_give:name, amount_give:amount, address_give:address, num_give:num},
+			  success: function(response){
+					alert('저장되었습니다');
+			  }
+			})
+		}
+
+		function listing() {
+			let name = 'olivia';
+			$.ajax({
+			  type: "GET",
+			  url: "http://spartacodingclub.shop/order",
+			  data: {name_give:name},
+			  success: function(response){
+			  	let articles = response['articles'];
+			  	for (let i = 0; i < articles.length; i++) {
+			  		let card = `
+			  		<div class="card">
+						<img class="card-img-top" src="${articles[i]['image']}" alt="Card image cap">
+						<div class="card-body">
+							<h5 class="card-title">${articles[i]['title']}</h5>
+							<p class="card-text">${articles[i]['desc']}</p>
+							<p class="card-text comment">${articles[i]['comment']}</p>
+						</div>
+					</div>
+			  		`;
+			  		$('#card-box').append(card);
+			  	}
+			  }
+			})
+		}
+
+		$(document).ready(function(){
+		  listing();
+		});
+	</script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+
+
+</head>
+<body>
+	<div class="wrap">
+	<div class="jumbotron">
+		<img src="https://ik.imagekit.io/hj8sm3kk7/medium/gallery/exterior/2/395/bentley-continental-front-angle-low-view-254939.jpg">
+  		<h1 class="display-4">Bentley Bentayga</h1>
+  		<p class="lead">This is a super fancy and awesome car. Just drive and feel freedom!</p>
+	 	<hr class="my-4">
+  		<p>Price:$100000</p>
+ 		<p class="lead">
+  		</p>
+  		
+  		<hr class="my-4">
+  		<p class="lead">Let's order it!</p>
+
+		<div class="input-group">
+		  <div class="input-group-prepend">
+		    <span class="input-group-text">Name</span>
+		    <input type="text" id="olivia">
+		  </div>
+		  <textarea class="form-control" aria-label="With textarea"></textarea>
+		</div>
+
+		<div class="input-group">
+		  <div class="input-group-prepend">
+		    <label class="input-group-text" for="inputGroupSelect01">Amount</label>
+		  <input type="custom-select" id="amount">
+		  </div>
+		  <select class="custom-select" id="inputGroupSelect01">
+		    <option selected>Choose...</option>
+		    <option value="1">One</option>
+		    <option value="2">Two</option>
+		    <option value="3">Three</option>
+		  </select>
+		</div>
+
+		<div class="input-group">
+		  <div class="input-group-prepend">
+		    <span class="input-group-text">Address</span>
+		    <input type="text" id="address">
+		  </div>
+		  <textarea class="form-control" aria-label="With textarea"></textarea>
+		</div>
+
+		<div class="input-group">
+		  <div class="input-group-prepend">
+		    <span class="input-group-text">Contact number</span>
+		    <input type="int" id="num">
+		  </div>
+		  <textarea class="form-control" aria-label="With textarea"></textarea>
+		</div>
+
+		<br>
+			<button type="button" class="btn btn-success" onclick="hey()">ORDER</button>
+		</div>
+
+	</div>
+	</div>
+
+
+</body>
+</html>
